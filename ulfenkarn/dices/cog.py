@@ -1,6 +1,7 @@
 import logging
 import random
 
+from discord import Embed
 from discord.ext.commands import Cog, command
 
 
@@ -66,8 +67,11 @@ class Dices(Cog):
     @command()
     async def roll(self, ctx, count: int, dice: str):
         """
-        Rolls one or more dice
+        Rolls one or more dice 🎲
         Available dices: d6, d8, d12, s(quare), t(riangle), p(entagon)
         """
         results = [DICES[dice]() for i in range(0, int(count))]
-        await ctx.send(', '.join(results))
+        embed = Embed(title="Result 🎲")
+        for i in range(0, int(count)):
+            embed.add_field(name=f"Dice #{i}", value=results[i])
+        await ctx.send(embed=embed)
