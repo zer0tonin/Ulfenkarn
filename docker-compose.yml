@@ -1,0 +1,16 @@
+version: '3'
+services:
+  ulfenkarn:
+    build: .
+    environment:
+      - PYTHONPATH=/usr/src/app
+    volumes:
+      - .:/usr/src/app
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:5.0.9
+    command: redis-server --appendonly yes
+    volumes:
+      - ./data:/data
